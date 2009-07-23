@@ -1,0 +1,8 @@
+use Devel::REPL;
+
+my $repl = Devel::REPL->new;
+$repl->load_plugin($_) for qw(History LexEnv MultiLine::PPI);
+$repl->run;
+
+
+
