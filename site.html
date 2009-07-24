@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title> Mediacloud Clustering. </title>
+    <link rel="stylesheet"
+     href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css"
+     type="text/css">
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="cluster.js"></script>
+  </head>
+  <body>
+   <div id="doc" class="yui-t7">
+     
+    <div id="hd" role="navigation">
+      <img src="topbar-with-logo.jpg" />
+      
+     <form onsubmit="cluster(); return false;">
+      Date in format yyyy-mm-dd: 
+      <input id="c_date" type="text" />
+      <input id="n" type="text" />
+     </form>
+
+     <div id="loading"></div>
+    </div>
+
+    <div id="bd" role="application">
+      <div class="yui-g">
+        <div id="clusters"></div>
+      </div>
+    </div>
+   </div>
+  </body>
+</html>
