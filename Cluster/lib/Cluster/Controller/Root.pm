@@ -29,8 +29,9 @@ Cluster::Controller::Root - Root Controller for Cluster
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
-    # Hello World
-    $c->response->body( $c->welcome_message );
+    # Use the clustering site.
+    $c->stash->{template} = 'site.html';
+    #$c->response->body( $c->welcome_message );
 }
 
 sub default :Path {
