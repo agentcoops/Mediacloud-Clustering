@@ -17,7 +17,9 @@ use JSON;
 ##
 # Check if the cache directory exists or else make it.
 sub checkForCacheOrMake {
-  unless (-e "matrix_cache") {mkdir "matrix_cache" or die "Could not make cache."};
+  unless (-e "matrix_cache") {
+      mkdir "matrix_cache" or die "Could not make cache."
+  };
 }
 
 ##
@@ -40,7 +42,7 @@ sub writeCluto {
   close $out;
 }
 
-##
+## TO FINISH 
 # Load a cluto sparse matrix format.
 sub readCluto {
   my $file_loc = $_[0];
@@ -58,7 +60,7 @@ sub readCluto {
     push @sparse_matrix, \@row_vals;
   }
 
-  return ()
+  return ($ncols, $nrows, $nonzero, )
 }
 
 ##
@@ -165,7 +167,6 @@ sub makeSparseMatrix {
 
 ##
 # Make a sparse matrix of term occurrences 
-#
 sub makeSparseMatrixDB {
   my ($db, $date) = @_[0,1];
   my %date_hash = %{ termHashDateDB($db, $date) };
@@ -179,7 +180,7 @@ sub connectDB {
   return $db;
 }
 
-##
+## TO FINISH
 # Get the summary of the clustering results having been passed a reference
 # to a cluto object.
 sub clusterSum {
@@ -215,20 +216,20 @@ sub prettifyClusters {
   return \%cluster_results;
 }
 
-## 
-# Accepts location of a mediacloud term txt, date, and, optionally, 
-# how frequent of words to use.  Default 10k.  Returns a Cluto cluster map.
+## TODO: Make caching work. 
+# Return a map of cluster ids to arrays of media names.
+# Accepts date to cluster and how many clusters you want.
 sub clusterDataDB {
   my ($date, $nclusters) = @_[0, 1];
   my $db = connectDB;
   my @cluster_data;
 
-  if (-e "matrix_cache/$date") {
-    @cluster_data = loadCluto("matrix_cache/$date");
-  } else { 
-    @cluster_data = makeSparseMatrixDB($db, $date);
-    writeCluto(\@cluster_data, $date);
-  };
+  #if (-e "matrix_cache/$date") {
+  #  @cluster_data = loadCluto("matrix_cache/$date");
+  #} else { 
+  @cluster_data = makeSparseMatrixDB($db, $date);
+  #  writeCluto(\@cluster_data, $date);
+  #};
 
   my ($ncols, $nrows, $nonzero) = @cluster_data[0,1,2];
   my @rowvals = @{ $cluster_data[3] };
