@@ -31,6 +31,7 @@ sub index :Path :Args(0) {
 
     # Use the clustering site.
     $c->stash->{template} = 'site.html';
+    $c->forward("Cluster::View::TT")
     #$c->response->body( $c->welcome_message );
 }
 

@@ -38,6 +38,8 @@ Cluster->config({
     },
 });
 
+Cluster->config->{static}->{ignore_extensions} = [ qw// ];
+
 # Start the application
 __PACKAGE__->setup();
 
