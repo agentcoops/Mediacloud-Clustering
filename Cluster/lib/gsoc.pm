@@ -5,14 +5,15 @@ BEGIN {
     use FindBin;
     use lib "/Users/francisc/Coding/perl/mediacloud/lib";
 }
+use JSON;
 use strict;
 use warnings;
 use Data::Dumper;
+use MediaWords::DB;
 use Statistics::Cluto;
 use DBIx::Simple::MediaWords;
-use MediaWords::DB;
-use JSON;
-
+use List::MoreUtils 'mesh';
+use UNIVERSAL 'isa';
 
 ##
 # Check if the cache directory exists or else make it.
@@ -71,11 +72,12 @@ sub loadTermsDB {
   my %data;
   my $index = 1;
   
-  my $stems = $db->query("SELECT stem, SUM(stem_count) AS ssc 
-                          FROM weekly_media_words 
-                          WHERE publish_week = '$date'
-                          GROUP BY stem 
-                          ORDER BY ssc DESC");
+  my $stems = 
+    $db->query("SELECT stem, SUM(stem_count) AS ssc 
+                FROM weekly_media_words 
+                WHERE publish_week = '$date'
+                GROUP BY stem 
+                ORDER BY ssc DESC");
   for my $i (0 .. $count) {
     my %stem_hash = %{ $stems->hash() };
     my ($stem, $total) = @stem_hash{'stem', 'ssc'};
@@ -85,7 +87,25 @@ sub loadTermsDB {
   }
 
   return \%data;
-} 
+}
+
+##
+# Make a mapping from indexes to terms. Accepts a termhash.
+sub reverseTermIndex {
+  my %term_hash = %{ $_[0] };
+  my %index_to_term;
+  my $last;
+
+  for (%term_hash) {
+    if (isa($_, "ARRAY")) {
+      $index_to_term{@{$_}[0]} = $last;
+    } else {
+      $last = $_;
+    }
+  }
+
+  return \%index_to_term;
+}
 
 ##
 # Make a lookup of all media outlets.
@@ -111,12 +131,13 @@ sub makeLookupDB {
 sub termHashDateDB {
     my ($db, $date) = @_[0,1];
     my %data;
-    my %term_hash = %{ loadTermsDB($db, 20000, $date) };
+    my %term_index = %{ loadTermsDB($db, 20000, $date) };
 
-    my $media_datas = $db->query("SELECT media_id, stem, stem_count
-                                  FROM weekly_media_words
-                                  WHERE publish_week = CAST('$date' AS timestamp without time zone)
-                                  ORDER BY stem_count DESC");
+    my $media_datas = 
+      $db->query("SELECT media_id, stem, stem_count
+                  FROM weekly_media_words
+                  WHERE publish_week = CAST('$date' AS timestamp without time zone)
+                  ORDER BY stem_count DESC");
 
     while(my $media_data = $media_datas->hash()) {
       my %media_data = %{ $media_data };
@@ -124,17 +145,17 @@ sub termHashDateDB {
       my $stem = $media_data{"stem"};
 
       eval {
-        my $index = (@{ $term_hash{$stem} })[0];
+        my $index = (@{ $term_index{$stem} })[0];
         push @{ $data{$media_id} }, $index; 
       };
     }
 
-    return \%data;
+    return (\%data, reverseTermIndex(\%term_index));
 }
 
 ##
-# Makes a sparse-matrix representation of all the media vectors for a given month.
-# Accepts a termdate hash.
+# Makes a sparse-matrix representation of all the media vectors for a 
+# given month. Accepts a termdate hash.
 sub makeSparseMatrix {
   my %date_hash = %{ $_[0] };
   my $ncols = 150000;
@@ -166,15 +187,18 @@ sub makeSparseMatrix {
 }
 
 ##
-# Make a sparse matrix of term occurrences 
+# Make a sparse mkatrix of term occurrences 
 sub makeSparseMatrixDB {
   my ($db, $date) = @_[0,1];
-  my %date_hash = %{ termHashDateDB($db, $date) };
+  my ($date_hash, $index_map) =  termHashDateDB($db, $date);
 
-  my ($ncols, $nrows, $nonzero, $rowvals, $rowlabels) = makeSparseMatrix(\%date_hash); 
-  return ($ncols, $nrows, $nonzero, $rowvals, $rowlabels);
+  my ($ncols, $nrows, $nonzero, 
+      $rowvals, $rowlabels) = makeSparseMatrix($date_hash);
+  return ($ncols, $nrows, $nonzero, $rowvals, $rowlabels, $index_map);
 }
 
+##
+# Return connection to MediaWords database.
 sub connectDB {
   my $db = DBIx::Simple::MediaWords->connect(MediaWords::DB::connect_info);
   return $db;
@@ -190,27 +214,66 @@ sub clusterSum {
   my @r_spid = @{ $results[1] };
   my @r_swgt = @{ $results[2] };
   my @r_sumptr = @{ $results[3] };
-  my @r_sumind = @{ $results[4] };
+  my @r_sumind = @{ $results[4] };  
+}
 
-  
+##
+# Zip together two lists.
+sub zip {
+  my ($arr1, $arr2) = @_[0,1];
+  map {[$$arr1[$_], $$arr2[$_]]} (0 .. (scalar(@$arr1)-1));
+}
+
+##
+# Get the five elements of input array starting at index.
+# get5([1,2,3,4,5,6], 0) => [1,2,3,4,5]
+sub getFiveFrom { @{$_[0]}[($_[1]*5) .. (($_[1]+1)*5-1)] };
+
+##
+# Return a hash mapping cluster numbers to lists of feature, weight pairs.
+sub getClusterFeatures {
+  my($c, $ncols, $index_lookup) = @_[0,1,2];
+  my($internalids, $internalwgts, 
+     $externalids, $externalwgts) = $c->V_GetClusterFeatures;
+  my %data;
+
+  for my $cluster (0 .. ($ncols-1)) {
+    my @raw_int_features = getFiveFrom($internalids, $cluster);
+    my @int_features = map {$index_lookup->{$_}} @raw_int_features;
+    my @int_weights = getFiveFrom($internalwgts, $cluster);
+    my @int_feature_weights = zip(\@int_features, \@int_weights);
+
+    my @raw_ext_features = getFiveFrom($externalids, $cluster);
+    my @ext_features = map {$index_lookup->{$_}} @raw_ext_features;
+    my @ext_weights = getFiveFrom($externalwgts, $cluster);
+    my @ext_feature_weights = zip(\@ext_features, \@ext_weights);
+
+    $data{$cluster} = [\@int_feature_weights, \@ext_feature_weights];
+  }
+
+  \%data;
 }
 
 ##
 # Take cluster output and make it properly readable. 
 sub prettifyClusters {
-  my $db = $_[0];
+  my($db, $cluster_features) = @_[0,3];
   my @clusters = @{ $_[1] };
   my @rownames = @{ $_[2] };
   my %lookup = %{ makeLookupDB($db) };
-  my %cluster_results;
-    
-  for my $row (0 .. scalar(@rownames)-1) {    
+  my %cluster_results;    
+  
+  for my $row (0 .. scalar(@rownames)-1) {
     my $cluster = $clusters[$row];
     my $media_id = $rownames[$row];
-
     my $media_name = $lookup{ $media_id };
-
-    push @{ $cluster_results{$cluster} }, $media_name;
+    if (!$cluster_results{$cluster}) {
+      my $key_features = $cluster_features->{$cluster};
+      push @{ $cluster_results{$cluster} }, $key_features;
+      push @{ $cluster_results{$cluster} }, [];
+    }
+    
+    push @{ $cluster_results{$cluster}[1] }, $media_name;
   }
 
   return \%cluster_results;
@@ -231,19 +294,19 @@ sub clusterDataDB {
   #  writeCluto(\@cluster_data, $date);
   #};
 
-  my ($ncols, $nrows, $nonzero) = @cluster_data[0,1,2];
-  my @rowvals = @{ $cluster_data[3] };
-  my @rowlabels = @{ $cluster_data[4] };
-
+  my ($ncols, $nrows, $nonzero, 
+      $rowvals, $rowlabels, $index_map) = @cluster_data[0 .. 5];
   my $c = new Statistics::Cluto;
-  $c->set_sparse_matrix($nrows, $ncols, \@rowvals);
+
+  $c->set_sparse_matrix($nrows, $ncols, $rowvals);
   $c->set_options({
-                   rowlabels => \@rowlabels,
+                   rowlabels => $rowlabels,
                    nclusters => $nclusters
                   });
 
-  my @clusters = @{ $c->VP_ClusterDirect };
-  return prettifyClusters($db, \@clusters, \@rowlabels);
+  my $clusters = $c->VP_ClusterDirect;
+  my $cluster_features = getClusterFeatures($c, $ncols, $index_map);
+  return prettifyClusters($db, $clusters, $rowlabels, $cluster_features);
 }
 
 
@@ -334,7 +397,8 @@ sub makeSparseMatrixFile {
   my ($filename, $date) = @_[0,1];
   my %date_hash = %{ termHashDate($filename, $date) };
   
-  my ($ncols, $nrows, $nonzero, $rowvals, $rowlabels) = makeSparseMatrix(\%date_hash); 
+  my ($ncols, $nrows, $nonzero, 
+      $rowvals, $rowlabels) = makeSparseMatrix(\%date_hash); 
   return ($ncols, $nrows, $nonzero, $rowvals, $rowlabels);
 }
 
@@ -408,7 +472,9 @@ sub goodClutoOut {
   }
 
   open my $out, ">>", "media_cluster.combo";
-  for (sort {$a <=> $b} (keys %data)) {print {$out} "$_ ". join(",", @{ $data{$_} }) ."\n"};
+  for (sort {$a <=> $b} (keys %data)) {
+    print {$out} "$_ ". join(",", @{ $data{$_} }) ."\n"
+  };
 
   return \%data;
 }
@@ -437,8 +503,8 @@ sub makeLookup {
 }
 
 ##
-# Takes output from goodClutoOut and replace all media ids with the acutal name of that
-# media outlet.
+# Takes output from goodClutoOut and replace all media ids with the acutal 
+# name of that media outlet.
 sub humanGoodOut {
   my ($media_file, $cluto_file) = @_[0,1];
   my %lookup = %{ makeLookup($media_file) };

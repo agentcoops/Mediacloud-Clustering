@@ -28,7 +28,9 @@ function cluster_callback(json) {
            + ' <tbody>'
 
   for (key in sortedKeys(json)) {
-    var cluster_items = json[key]
+    var cluster_items = json[key][1]
+    var int_features = json[key][0][0]
+    var ext_features = json[key][0][1]
 
     var cluster_html = '<tr>'
                       +'  <th class="clusters">'+ key +'</th>'
@@ -39,7 +41,7 @@ function cluster_callback(json) {
     }
 
     html += cluster_html
-    }
+  }
 
-    $('#clusters').append(html)
+  $('#clusters').append(html)
 }

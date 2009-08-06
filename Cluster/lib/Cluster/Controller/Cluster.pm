@@ -11,9 +11,9 @@ sub date : Chained : CaptureArgs(1) {
 sub n : Chained('date') : Args(1) {
   my ($self, $c, $n ) = @_;
   my $date = $c->stash->{date};
-  my %cluster = %{ gsoc::clusterDataDB($date, $n) };
+  my $clusters = gsoc::clusterDataDB($date, $n);
 
-  $c->stash->{json_data} = \%cluster;
+  $c->stash->{json_data} = $clusters;
   $c->forward('Cluster::View::JSON');
 }
 1;
