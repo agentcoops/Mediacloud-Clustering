@@ -17,6 +17,14 @@ function cluster() {
   $.getJSON("/date/"+date+"/n/10", cluster_callback)
 }
 
+function get_elt_or(array, ind) {
+  if (array[ind]) {
+    return (array[ind]).join(", ")
+  } else {
+    return ""
+  }
+}
+
 function cluster_callback(json) {
   $('#loading').empty()
   $('#loading').append("Finished loading clusters.")
@@ -24,6 +32,8 @@ function cluster_callback(json) {
            + ' <thead>'
            + '  <th class="clusters"> Cluster </th>'
            + '  <th class="media"> Media </th>'
+           + '  <th class="internal"> Int. Feature </th>'
+           + '  <th class="external"> Ext. Feature </th>'
            + ' </thead>'
            + ' <tbody>'
 
@@ -31,13 +41,21 @@ function cluster_callback(json) {
     var cluster_items = json[key][1]
     var int_features = json[key][0][0]
     var ext_features = json[key][0][1]
-
     var cluster_html = '<tr>'
                       +'  <th class="clusters">'+ key +'</th>'
                       +'</tr>'
+
+    var count = 0
     for (key2 in cluster_items) {
-      cluster_html += '<tr><th></th>'
-                     +' <td class="media">'+ cluster_items[key2] +'</td></tr>'
+      var int_feature = get_elt_or(int_features, count)
+      var ext_feature = get_elt_or(ext_features, count)
+      count++
+
+      cluster_html += '<tr> <th></th>'
+                     +' <td class="media">'+ cluster_items[key2] +'</td>'
+                     +' <td class="internal">'+ int_feature +'</td>'
+                     +' <td class="external">'+ ext_feature +'</td>'
+                     +'</tr>'
     }
 
     html += cluster_html
