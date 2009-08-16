@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svnroot/mediacloud/!svn/ver/859/lib/MediaWords/Tagger
+END
+SIP.pm
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/mediacloud/!svn/ver/728/lib/MediaWords/Tagger/SIP.pm
+END
+Calais.pm
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svnroot/mediacloud/!svn/ver/858/lib/MediaWords/Tagger/Calais.pm
+END
+NYTTopics.pm
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svnroot/mediacloud/!svn/ver/730/lib/MediaWords/Tagger/NYTTopics.pm
+END
+Yahoo.pm
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/mediacloud/!svn/ver/859/lib/MediaWords/Tagger/Yahoo.pm
+END

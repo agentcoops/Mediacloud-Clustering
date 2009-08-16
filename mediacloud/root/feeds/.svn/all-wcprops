@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svnroot/mediacloud/!svn/ver/305/root/feeds
+END
+list.tt2
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svnroot/mediacloud/!svn/ver/303/root/feeds/list.tt2
+END
+batch_edit_feeds.tt2
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svnroot/mediacloud/!svn/ver/210/root/feeds/batch_edit_feeds.tt2
+END
+scrape.tt2
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svnroot/mediacloud/!svn/ver/304/root/feeds/scrape.tt2
+END
+delete.tt2
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svnroot/mediacloud/!svn/ver/210/root/feeds/delete.tt2
+END
+edit_tags.tt2
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svnroot/mediacloud/!svn/ver/7/root/feeds/edit_tags.tt2
+END
+batch_create.tt2
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/mediacloud/!svn/ver/26/root/feeds/batch_create.tt2
+END
+batch_edit_tags.tt2
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/mediacloud/!svn/ver/7/root/feeds/batch_edit_tags.tt2
+END
+edit.tt2
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svnroot/mediacloud/!svn/ver/305/root/feeds/edit.tt2
+END

@@ -1,0 +1,12 @@
+[% title = 'Create Cluster' %]
+[% INCLUDE include/header.tt2 %]
+
+<fieldset>
+
+[% form.render %]
+
+</fieldset>
+
+<p />
+
+[% INCLUDE include/footer.tt2 %]

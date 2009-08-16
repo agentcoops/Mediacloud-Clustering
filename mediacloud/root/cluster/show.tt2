@@ -1,0 +1,21 @@
+[% title = 'View Cluster' %]
+[% INCLUDE include/header.tt2 %]
+
+<table>
+  <thead>
+    <th class="clusters"> Cluster </th>
+    <th class="media"> Media </th>
+    <th class="internal"> Int. Feature </th>
+    <th class="external"> Ext. Feature </th>
+  </thead>
+  <tbody>   
+    [% FOREACH cluster IN clusters %]  
+       <tr>
+         <th class="clusters">[% cluster.key %]</th>
+       </tr>
+       
+    [% END %]
+  </tbody>
+</table>
+
+[% INCLUDE include/footer.tt2 %]

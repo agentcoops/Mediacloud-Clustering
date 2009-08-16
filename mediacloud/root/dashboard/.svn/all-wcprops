@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svnroot/mediacloud/!svn/ver/929/root/dashboard
+END
+header.tt2
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/mediacloud/!svn/ver/929/root/dashboard/header.tt2
+END
+view.tt2
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svnroot/mediacloud/!svn/ver/929/root/dashboard/view.tt2
+END
+list.tt2
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svnroot/mediacloud/!svn/ver/929/root/dashboard/list.tt2
+END
+footer.tt2
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/mediacloud/!svn/ver/929/root/dashboard/footer.tt2
+END

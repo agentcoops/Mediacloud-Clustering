@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/mediacloud/!svn/ver/283/script/extractor_test_output
+END
+test_baseline.txt
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svnroot/mediacloud/!svn/ver/282/script/extractor_test_output/test_baseline.txt
+END
+download_id_list.txt
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/mediacloud/!svn/ver/283/script/extractor_test_output/download_id_list.txt
+END

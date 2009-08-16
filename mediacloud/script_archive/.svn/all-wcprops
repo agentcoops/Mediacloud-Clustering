@@ -1,0 +1,107 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svnroot/mediacloud/!svn/ver/1017/script_archive
+END
+mediawords_add_study_terms.pl
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svnroot/mediacloud/!svn/ver/1017/script_archive/mediawords_add_study_terms.pl
+END
+mediawords_process_term_study.pl
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/mediacloud/!svn/ver/1017/script_archive/mediawords_process_term_study.pl
+END
+mediawords_print_study_terms.pl
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svnroot/mediacloud/!svn/ver/1017/script_archive/mediawords_print_study_terms.pl
+END
+mediawords_add_feed_archives.pl
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svnroot/mediacloud/!svn/ver/709/script_archive/mediawords_add_feed_archives.pl
+END
+mediawords_remove_duplicate_stories.pl
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/mediacloud/!svn/ver/757/script_archive/mediawords_remove_duplicate_stories.pl
+END
+mediawords_add_nyt_tags.pl
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svnroot/mediacloud/!svn/ver/1017/script_archive/mediawords_add_nyt_tags.pl
+END
+mediawords_migrate_nyt_tags.pl
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svnroot/mediacloud/!svn/ver/1017/script_archive/mediawords_migrate_nyt_tags.pl
+END
+mediawords_create_media_tag_tag_counts_in_memory.pl
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svnroot/mediacloud/!svn/ver/1017/script_archive/mediawords_create_media_tag_tag_counts_in_memory.pl
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svnroot/mediacloud/!svn/ver/562/script_archive/README
+END
+mediawords_test_tagger.pl
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svnroot/mediacloud/!svn/ver/1017/script_archive/mediawords_test_tagger.pl
+END
+mediawords_add_feed_comments_and_generator.pl
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svnroot/mediacloud/!svn/ver/710/script_archive/mediawords_add_feed_comments_and_generator.pl
+END
+mediawords_delete_old_nyt_tags.pl
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/mediacloud/!svn/ver/1017/script_archive/mediawords_delete_old_nyt_tags.pl
+END
+mediawords_fill_downtexts_table.pl
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/mediacloud/!svn/ver/1017/script_archive/mediawords_fill_downtexts_table.pl
+END
+mediawords_add_calais_tags.pl
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svnroot/mediacloud/!svn/ver/1017/script_archive/mediawords_add_calais_tags.pl
+END
+mediawords_test_fetch_content.pl
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svnroot/mediacloud/!svn/ver/711/script_archive/mediawords_test_fetch_content.pl
+END
+fix_broken_downloads.pl
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svnroot/mediacloud/!svn/ver/940/script_archive/fix_broken_downloads.pl
+END
+mediawords_test_preprocessor.pl
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svnroot/mediacloud/!svn/ver/1017/script_archive/mediawords_test_preprocessor.pl
+END

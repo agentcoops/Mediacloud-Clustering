@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svnroot/mediacloud/!svn/ver/967/lib/MediaWords/DBI
+END
+Feeds.pm
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svnroot/mediacloud/!svn/ver/720/lib/MediaWords/DBI/Feeds.pm
+END
+Stories.pm
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/mediacloud/!svn/ver/967/lib/MediaWords/DBI/Stories.pm
+END
+Downloads.pm
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svnroot/mediacloud/!svn/ver/967/lib/MediaWords/DBI/Downloads.pm
+END
+StoriesTagsMapMediaSubtables.pm
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/mediacloud/!svn/ver/916/lib/MediaWords/DBI/StoriesTagsMapMediaSubtables.pm
+END
+DownloadTexts.pm
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/mediacloud/!svn/ver/930/lib/MediaWords/DBI/DownloadTexts.pm
+END

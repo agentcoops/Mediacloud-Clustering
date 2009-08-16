@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svnroot/mediacloud/!svn/ver/1069/lib/MediaWords/Crawler
+END
+Engine.pm
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/mediacloud/!svn/ver/1015/lib/MediaWords/Crawler/Engine.pm
+END
+BlogSpiderBlogHomeHandler.pm
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/mediacloud/!svn/ver/1061/lib/MediaWords/Crawler/BlogSpiderBlogHomeHandler.pm
+END
+Preprocessor.pm
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svnroot/mediacloud/!svn/ver/646/lib/MediaWords/Crawler/Preprocessor.pm
+END
+BlogUrlProcessor.pm
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svnroot/mediacloud/!svn/ver/1067/lib/MediaWords/Crawler/BlogUrlProcessor.pm
+END
+BlogUrlCanonicalizer.pm
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svnroot/mediacloud/!svn/ver/1061/lib/MediaWords/Crawler/BlogUrlCanonicalizer.pm
+END
+Provider.pm
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/mediacloud/!svn/ver/1069/lib/MediaWords/Crawler/Provider.pm
+END
+BlogPageProcessor_LiveJournal.pm
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/mediacloud/!svn/ver/1017/lib/MediaWords/Crawler/BlogPageProcessor_LiveJournal.pm
+END
+Extractor.pm
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/mediacloud/!svn/ver/801/lib/MediaWords/Crawler/Extractor.pm
+END
+BlogSpiderPostingHandler.pm
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svnroot/mediacloud/!svn/ver/1061/lib/MediaWords/Crawler/BlogSpiderPostingHandler.pm
+END
+Handler.pm
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svnroot/mediacloud/!svn/ver/1061/lib/MediaWords/Crawler/Handler.pm
+END
+Pager.pm
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/mediacloud/!svn/ver/1015/lib/MediaWords/Crawler/Pager.pm
+END
+Fetcher.pm
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/mediacloud/!svn/ver/807/lib/MediaWords/Crawler/Fetcher.pm
+END
+BlogPageProcessor.pm
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svnroot/mediacloud/!svn/ver/1017/lib/MediaWords/Crawler/BlogPageProcessor.pm
+END

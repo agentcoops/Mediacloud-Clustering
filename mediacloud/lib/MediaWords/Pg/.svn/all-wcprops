@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svnroot/mediacloud/!svn/ver/980/lib/MediaWords/Pg
+END
+StoryVectors.pm
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/mediacloud/!svn/ver/980/lib/MediaWords/Pg/StoryVectors.pm
+END
+Cleanup.pm
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/mediacloud/!svn/ver/739/lib/MediaWords/Pg/Cleanup.pm
+END
+Schema.pm
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svnroot/mediacloud/!svn/ver/966/lib/MediaWords/Pg/Schema.pm
+END
+WordCloud.pm
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/mediacloud/!svn/ver/657/lib/MediaWords/Pg/WordCloud.pm
+END

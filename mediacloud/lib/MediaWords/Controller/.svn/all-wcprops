@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/mediacloud/!svn/ver/980/lib/MediaWords/Controller
+END
+Search.pm
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/mediacloud/!svn/ver/389/lib/MediaWords/Controller/Search.pm
+END
+Stats_static.pm
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svnroot/mediacloud/!svn/ver/433/lib/MediaWords/Controller/Stats_static.pm
+END
+Feeds.pm
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svnroot/mediacloud/!svn/ver/778/lib/MediaWords/Controller/Feeds.pm
+END
+Dashboard.pm
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svnroot/mediacloud/!svn/ver/929/lib/MediaWords/Controller/Dashboard.pm
+END
+Stories.pm
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svnroot/mediacloud/!svn/ver/779/lib/MediaWords/Controller/Stories.pm
+END
+Extractor_Stats.pm
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svnroot/mediacloud/!svn/ver/403/lib/MediaWords/Controller/Extractor_Stats.pm
+END
+Downloads.pm
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svnroot/mediacloud/!svn/ver/867/lib/MediaWords/Controller/Downloads.pm
+END
+Visualize.pm
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svnroot/mediacloud/!svn/ver/980/lib/MediaWords/Controller/Visualize.pm
+END
+Stats.pm
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svnroot/mediacloud/!svn/ver/438/lib/MediaWords/Controller/Stats.pm
+END
+Media.pm
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svnroot/mediacloud/!svn/ver/832/lib/MediaWords/Controller/Media.pm
+END
+Topics.pm
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/mediacloud/!svn/ver/766/lib/MediaWords/Controller/Topics.pm
+END
+Cosines.pm
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svnroot/mediacloud/!svn/ver/339/lib/MediaWords/Controller/Cosines.pm
+END
+Root.pm
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/mediacloud/!svn/ver/339/lib/MediaWords/Controller/Root.pm
+END

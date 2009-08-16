@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svnroot/mediacloud/!svn/ver/979/root/forms
+END
+media.yml
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svnroot/mediacloud/!svn/ver/7/root/forms/media.yml
+END
+scrape_feeds.yml
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/mediacloud/!svn/ver/2/root/forms/scrape_feeds.yml
+END
+media_search.yml
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/mediacloud/!svn/ver/2/root/forms/media_search.yml
+END
+feeds.yml
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svnroot/mediacloud/!svn/ver/7/root/forms/feeds.yml
+END
+edit_tags.yml.tt2
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/mediacloud/!svn/ver/210/root/forms/edit_tags.yml.tt2
+END
+visualize.yml
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svnroot/mediacloud/!svn/ver/979/root/forms/visualize.yml
+END

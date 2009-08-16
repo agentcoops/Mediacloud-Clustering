@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svnroot/mediacloud/!svn/ver/798/data/tagger
+END
+sip_data.dbm
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svnroot/mediacloud/!svn/ver/327/data/tagger/sip_data.dbm
+END
+nyt_topics.txt
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/mediacloud/!svn/ver/798/data/tagger/nyt_topics.txt
+END
+nyt_topics_stopwords.txt
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svnroot/mediacloud/!svn/ver/203/data/tagger/nyt_topics_stopwords.txt
+END

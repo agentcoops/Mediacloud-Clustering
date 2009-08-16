@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/mediacloud/!svn/ver/339/lib/HTML/FormFu/Constraint
+END
+FeedURL.pm
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svnroot/mediacloud/!svn/ver/339/lib/HTML/FormFu/Constraint/FeedURL.pm
+END
+TagPrefix.pm
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svnroot/mediacloud/!svn/ver/339/lib/HTML/FormFu/Constraint/TagPrefix.pm
+END
+URL.pm
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/mediacloud/!svn/ver/339/lib/HTML/FormFu/Constraint/URL.pm
+END

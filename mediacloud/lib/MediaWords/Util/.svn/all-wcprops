@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svnroot/mediacloud/!svn/ver/923/lib/MediaWords/Util
+END
+StopWords.pm
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/mediacloud/!svn/ver/918/lib/MediaWords/Util/StopWords.pm
+END
+Config.pm
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/mediacloud/!svn/ver/923/lib/MediaWords/Util/Config.pm
+END
+Web.pm
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/mediacloud/!svn/ver/790/lib/MediaWords/Util/Web.pm
+END
+Tags.pm
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svnroot/mediacloud/!svn/ver/769/lib/MediaWords/Util/Tags.pm
+END

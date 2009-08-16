@@ -1,0 +1,33 @@
+auto_fieldset:
+
+elements:
+  - type: Number
+    name: clusters
+    label: Number of Clusters
+    value: 10
+    comment: The number of clusters to create on given date range.
+
+  - type: Text
+    name: source_tag_name
+    label: Include Tag
+    size: 48
+    value: default
+    comment: Name of word_cloud:* tag marking which media sources an feeds to include in the query.  Leave as 'default' to include the default set.
+
+  - type: Text
+    name: from
+    label: From
+    comment: Start date.
+
+  - type: Text
+    name: to
+    label: To
+    comment: End date.
+
+  - type: Text
+    name: description
+    label: Description
+    comment: Description of the cluster to be created.
+
+  - type: Submit
+    value: Cluster!

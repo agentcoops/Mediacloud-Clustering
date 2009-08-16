@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svnroot/mediacloud/!svn/ver/935/data/media_and_feed_list
+END
+media_feeds_tags.dump
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svnroot/mediacloud/!svn/ver/935/data/media_and_feed_list/media_feeds_tags.dump
+END
+media_and_feed_tags.tsv
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/mediacloud/!svn/ver/935/data/media_and_feed_list/media_and_feed_tags.tsv
+END
+tag_sets.dump
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svnroot/mediacloud/!svn/ver/935/data/media_and_feed_list/tag_sets.dump
+END
