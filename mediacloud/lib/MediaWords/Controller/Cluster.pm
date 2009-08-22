@@ -90,10 +90,17 @@ sub getFiveFrom {
 #<- DBI Helper Subroutines.  ->#
 
 ##
+# Return connection to MediaWords database.
+sub connectDB {
+  my $db = DBIx::Simple::MediaWords->connect(MediaWords::DB::connect_info);
+  return $db;
+}
+
+##
 # Store a cluster in the mediacloud database.
 sub storeClusters {
-  my ($db, $start_date, $end_date, 
-      $num_clusters, $description, $tag, $clusters) = @_;
+  my ($db, $start_date, $end_date, $num_clusters, 
+      $description, $tag, $organized_clusters, $cluster_features) = @_;
 
   my $stored_cluster = 
     $db->create(
@@ -102,7 +109,7 @@ sub storeClusters {
        start_date => $start_date,
        end_date => $end_date,
        num_clusters => $num_clusters,
-       tags_id => undef,
+       tags_id => $tag,
        description => $description
       }
     );
@@ -110,11 +117,78 @@ sub storeClusters {
   my $cluster_run_id = 
     $db->last_insert_id( undef, undef, 'media_cluster_runs', undef );
 
+  for my $cluster (keys %{$organized_clusters}) {
+    $db->create(
+      'media_clusters',
+      {
+       media_cluster_runs_id => $cluster_run_id
+      }
+    );
+
+    my $cluster_id = $db->last_insert_id(undef, undef, 'media_clusters', undef);
     
+    for my $media_id (@{$organized_clusters->{$cluster}}) {
+      eval {
+        $db->create(
+          'media_clusters_media_map',
+          {
+           media_clusters_id => $cluster_id,
+           media_id => $media_id
+          }
+        )
+      } or do {
+        print "$media_id";
+      }
+    }
+  } 
 }
 
-sub getClustersOrCreate {
+##
+# List all cluster runs in the database.
+sub listClusterRuns {
+  my $db = connectDB;
+  my @run_list;
 
+  my $run_query = $db->query("SELECT * FROM media_cluster_runs");
+  while (my $run = $run_query->hash) {
+    my $cluster_summary = 
+      [$run->{media_cluster_runs_id}, $run->{start_date}, $run->{end_date}, 
+       $run->{num_clusters}, $run->{tags_id}, $run->{description}];
+
+    push @run_list, $cluster_summary;
+  }
+
+  return \@run_list;
+}
+
+##
+# Get all the clusters for a particular run.
+sub getClusterRun {
+  my $runid = $_[0];
+  my $db = connectDB;
+  my %media_hash;
+
+  my $cluster_ids = 
+    $db->query("SELECT media_clusters_id FROM media_clusters
+                WHERE media_cluster_runs_id = $runid");
+
+  while (my $cluster_hash = $cluster_ids->hash) {
+    my $cid = $cluster_hash->{media_clusters_id};
+ 
+    my $media_ids = 
+      $db->query("SELECT media_id, name FROM media
+                  WHERE media_id IN
+                    (SELECT media_id FROM media_clusters_media_map
+                     WHERE media_clusters_id = $cid)");
+
+    while (my $media_hash = $media_ids->hash) {
+      my $name = $media_hash->{name};
+      
+      push @{ $media_hash{$cid} }, $name;
+    }
+  }
+
+  return \%media_hash;
 }
 
 
@@ -123,6 +197,7 @@ sub getClustersOrCreate {
 ##
 # Load the top $count terms for a given data from MC db, also  
 # puts the total count in hash.  Ignores stop words.
+# TODO: AND NOT is_stop_stem('long', stem)
 sub loadTermsDB {
   my ($db, $count, $date) = @_[0,1,2];
   my %data;
@@ -130,8 +205,8 @@ sub loadTermsDB {
   
   my $stems = 
     $db->query("SELECT stem, SUM(stem_count) AS ssc 
-                FROM weekly_media_words 
-                WHERE publish_week = '$date' and not is_stop_stem('long', stem)
+                FROM weekly_media_words  
+                WHERE publish_week = '$date'               
                 GROUP BY stem 
                 ORDER BY ssc DESC");
   for my $i (0 .. $count) {
@@ -254,13 +329,6 @@ sub makeSparseMatrixDB {
 }
 
 ##
-# Return connection to MediaWords database.
-sub connectDB {
-  my $db = DBIx::Simple::MediaWords->connect(MediaWords::DB::connect_info);
-  return $db;
-}
-
-##
 # Accepts a recently clustered cluto object, the number of columns and a term-index 
 # lookup.  Returns a hash mapping cluster numbers to pair of lists of feature, 
 # weight pairs.  The first such list contains the most important terms held by inhabitants
@@ -273,6 +341,7 @@ sub getClusterFeatures {
   my %data;
 
   for my $cluster (0 .. ($ncols-1)) {
+    print "$cluster, $ncols";
     my @raw_int_features = getFiveFrom($internalids, $cluster);
     my @int_features = map {$index_lookup->{$_}} @raw_int_features;
     my @int_weights = getFiveFrom($internalwgts, $cluster);
@@ -296,48 +365,51 @@ sub getClusterFeatures {
 # to.  Outputs map from cluster ids to pair of the key features for that cluster and 
 # the names of the media outlets occurring therein.  
 sub prettifyClusters {
-  my($db, $cluster_features) = @_[0,3];
-  my @clusters = @{ $_[1] };
-  my @rownames = @{ $_[2] };
+  my($db, $organized_clusters, $cluster_features) = @_; #0,3
+
   my %lookup = %{ makeLookupDB($db) };
   my %cluster_results;    
   
-  for my $row (0 .. scalar(@rownames)-1) {
-    my $cluster = $clusters[$row];
-    my $media_id = $rownames[$row];
-    my $media_name = $lookup{ $media_id };
-    if (!$cluster_results{$cluster}) {
-      my $key_features = $cluster_features->{$cluster};
-      push @{ $cluster_results{$cluster} }, $key_features;
-      push @{ $cluster_results{$cluster} }, [];
-    }
-    
-    push @{ $cluster_results{$cluster}[1] }, $media_name;
+  for my $cluster (keys %{$organized_clusters}) {
+    my @raw_media_ids = @{$organized_clusters->{$cluster}};
+    my @media_list = map {$lookup{$_}} @raw_media_ids;
+
+    my $key_features = $cluster_features->{$cluster};
+    push @{ $cluster_results{$cluster} }, $key_features;
+    push @{ $cluster_results{$cluster} }, \@media_list;
   }
 
   return \%cluster_results;
 }
 
-## TODO: Make db integration work. 
+##
+# Take the raw output of cluto clustering and return a map from cluster ids to lists of 
+# media ids.  
+sub organizeClusters {
+  my($clusters, $rownames) = @_;
+  my %cluster_hash;
+
+  for my $row (0 .. scalar(@{$rownames})) {
+    my $cluster = $clusters->[$row];
+    my $media_id = $rownames->[$row];
+    push @{$cluster_hash{$cluster}}, $media_id;
+  }
+
+  return \%cluster_hash;
+}
+
+## 
 # Return a map of cluster ids to arrays of media names.
 # Accepts date to cluster and how many clusters you want.
 sub clusterDataDB {
-  my ($date, $nclusters) = @_[0, 1];
+  my ($date, $enddate, $nclusters, $description) = @_;
   my $db = connectDB;
-  my @cluster_data;
 
-  # Unfinished cache code commented out...
-  #if (-e "matrix_cache/$date") {
-  #  @cluster_data = loadCluto("matrix_cache/$date");
-  #} else { 
-  @cluster_data = makeSparseMatrixDB($db, $date);
-  #  writeCluto(\@cluster_data, $date);
-  #};
-
+  my @cluster_data = makeSparseMatrixDB($db, $date);
   my ($ncols, $nrows, $nonzero, 
       $rowvals, $rowlabels, $index_map) = @cluster_data[0 .. 5];
-  my $c = new Statistics::Cluto;
 
+  my $c = new Statistics::Cluto;
   $c->set_sparse_matrix($nrows, $ncols, $rowvals);
   $c->set_options({
                    rowlabels => $rowlabels,
@@ -345,10 +417,26 @@ sub clusterDataDB {
                   });
 
   my $clusters = $c->VP_ClusterDirect;
-  my $cluster_features = getClusterFeatures($c, $ncols, $index_map);
-  return prettifyClusters($db, $clusters, $rowlabels, $cluster_features);
+  my $organized_clusters = organizeClusters($clusters, $rowlabels);
+  #my $cluster_features = getClusterFeatures($c, $ncols, $index_map);
+  storeClusters($db, $date, $enddate, $nclusters, $description, undef,
+                $organized_clusters, []);
+  return $organized_clusters #prettifyClusters($db, $organized_clusters, $cluster_features);
 }
 
+
+#<- Subroutines for Mediacloud webapp ->#
+
+##
+# Action for showing an already made cluster.
+sub show: Local : Args(1) {
+  my ($self, $c, $run_id) = @_;
+
+  my $clusters = getClusterRun($run_id);
+  $c->stash->{clusters} = $clusters;
+  $c->stash->{run_id} = $run_id;
+  $c->stash->{template} = 'cluster/show.tt2';
+}
 
 ##
 # Action for creating a new cluster.
@@ -366,21 +454,22 @@ sub home: Local {
 
   $form->process( $c->request );
   
-  # form parameters
-  my $params;
-
-  my $type = $c->request->param('type') || 'term';
   my $from = $c->request->param('from');
   my $to = $c->request->param('to');
   my $description = $c->request->param('description');
   my $clusters = $c->request->param('clusters'); 
   my $tag = $c->request->param('source_tag_name');
+  my $runs = listClusterRuns;
 
-  my $cluster_results = clusterDataDB($from, $clusters);
-
+  $c->stash->{runs} = $runs;
   $c->stash->{form} = $form;
-  $c->stash->{clusters} = $cluster_results;
-  $c->stash->{template} = 'cluster/show.tt2';
+  $c->stash->{template} = 'cluster/create.tt2';
+
+  if ($form->submitted) {
+    my $cluster_results = clusterDataDB($from, $to, $clusters, $description);
+    $c->stash->{clusters} = $cluster_results;
+    $c->stash->{template} = 'cluster/show.tt2';
+  }
 }
 
 =head1 AUTHOR

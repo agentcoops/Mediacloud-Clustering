@@ -448,35 +448,35 @@ create table total_daily_mc_words (
 );
 
 create table media_cluster_runs (
-	media_cluster_runs_id	serial		primary key,
-	start_date				timestamp,	not null,
+	media_cluster_runs_id	serial  primary key,
+	start_date				timestamp   not null,
 	end_date				date		not null,
 	num_clusters				int			not null,
 	tags_id					int			null references tags on delete cascade,
-	description				tag			null
+	description				text			null
 );
 
 create index media_cluster_runs_tag on media_cluster_runs(tags_id);
 
 create table media_clusters (
-	media_clusters_id		serial		primary key,
-	cluster_num				int			not null,
+	media_clusters_id			serial	primary key,
+	media_cluster_runs_id			int	not null references media_cluster_runs on delete cascade
 );
 
 create table media_clusters_media_map (
-	media_clusters_id		int			not null,
-	media_id				int			not null references media on delete cascade
+	media_clusters_id	int   not null references media_clusters on delete cascade,
+	media_id		int   not null references media on delete cascade
 );
 
 create index media_clusters_media_map_cluster on media_clusters_media_map (media_clusters_id);
 create index media_clusters_media_map_media on media_clusters_media_map (media_id);
 
 create table media_cluster_words (
-	media_cluster_words_id	serial		primary key,
-	media_clusters_id		int			not null references media_clusters on delete cascade,
-	score					float			not null,
-	stem					text			not null,
-	term					text			not null
+	media_cluster_words_id	 serial	primary key,
+	media_clusters_id	 int	not null references media_clusters on delete cascade,
+	score			 float	not null,
+	stem			 text	not null,
+	term			 text	not null
 );
 
 create index media_cluster_words_cluster on media_cluster_words (media_clusters_id);

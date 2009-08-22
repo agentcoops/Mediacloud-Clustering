@@ -1,6 +1,30 @@
 [% title = 'Create Cluster' %]
 [% INCLUDE include/header.tt2 %]
 
+<table>
+ <tr>
+  <th>ClusterID</th>
+  <th>From</th>
+  <th>To</th>
+  <th>Clusters</th>
+  <th>Tags</th> 
+  <th>Description</th> 
+ </tr>              
+
+ [% FOREACH cluster IN runs %]
+    [% SET id = cluster.0 %]
+
+    <tr [% IF even %]id="even"[% END %]>
+    [% FOREACH data IN cluster %]
+       <td><a href="/cluster/show/[% id %]">[% data %]</a></td>
+    [% END %]
+    </tr>
+ [% SET even = !even %]
+ [% END %]
+</table>
+
+<p />
+
 <fieldset>
 
 [% form.render %]

@@ -10,10 +10,15 @@
   </thead>
   <tbody>   
     [% FOREACH cluster IN clusters %]  
-       <tr>
-         <th class="clusters">[% cluster.key %]</th>
-       </tr>
-       
+       [% FOREACH media IN cluster.value %]                
+         <tr [% IF even %]id="even"[% END %]>
+          <th class="clusters">[% cluster.key %]</th>
+          <td class="media">[% media %]</td>
+          <td class="internal"></td>
+          <td class="external"></td>
+         <tr>
+       [% SET even = !even %]
+       [% END %]
     [% END %]
   </tbody>
 </table>
