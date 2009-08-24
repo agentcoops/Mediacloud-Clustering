@@ -1,26 +1,73 @@
 [% title = 'View Cluster' %]
 [% INCLUDE include/header.tt2 %]
+Clusters for run [% run_id %].
+<p>
 
-<table>
-  <thead>
-    <th class="clusters"> Cluster </th>
-    <th class="media"> Media </th>
-    <th class="internal"> Int. Feature </th>
-    <th class="external"> Ext. Feature </th>
-  </thead>
-  <tbody>   
-    [% FOREACH cluster IN clusters %]  
-       [% FOREACH media IN cluster.value %]                
-         <tr [% IF even %]id="even"[% END %]>
-          <th class="clusters">[% cluster.key %]</th>
-          <td class="media">[% media %]</td>
-          <td class="internal"></td>
-          <td class="external"></td>
-         <tr>
-       [% SET even = !even %]
-       [% END %]
-    [% END %]
-  </tbody>
-</table>
+[% FOREACH cluster IN clusters %]
+  [% SET medias = cluster.value.0 %]
+  [% SET internals = cluster.value.1.0 %]
+  [% SET externals = cluster.value.1.1 %]
+  <p/>
+  Cluster [% cluster.key %]:
+  <table>
+     <thead>
+       <th class="media"> Media </th>
+       <th class="int"> Internal Features </th>
+       <th class="ext"> External Features </th>
+     </thead>
+
+     <tbody>
+       <tr>
+         <td>         
+         <table> 
+           [% FOREACH media IN medias %]                
+             <tr [% IF even %]id="even"[% END %]>
+               <td class="media">[% media %]</td>
+             <tr>
+           [% SET even = !even %]
+           [% END %]    
+         </table>
+         </td>
+    
+         <td>   
+         <table>
+           <thead>
+             <th class="feature"> Feature </th>
+             <th class="score"> Score </th>
+           </thead>
+           
+           <tbody>
+             [% FOREACH internal IN internals %]
+               <tr [% IF even %]id="even"[% END %]>
+                 <td> [% internal.0 %] </td>
+                 <td> [% internal.1 %] </td>
+               </tr>
+             [% END %]
+           </tbody>
+         </table>
+         </td>
+
+         <td>   
+         <table>
+           <thead>
+             <th class="feature"> Feature </th>
+             <th class="score"> Score </th>
+           </thead>
+           
+           <tbody>
+             [% FOREACH external IN externals %]
+               <tr [% IF even %]id="even"[% END %]>
+                 <td> [% external.0 %] </td>
+                 <td> [% external.1 %] </td>
+               </tr>
+             [% END %]
+           </tbody>
+         </table>
+         </td>
+       </tr>
+     </tbody> 
+  </table>
+
+[% END %]
 
 [% INCLUDE include/footer.tt2 %]
